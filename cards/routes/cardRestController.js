@@ -9,6 +9,7 @@ const {
   likeCard,
 } = require("../models/cardsAccessDataService");
 const auth = require("../../auth/authService");
+const normalizeCard = require("../helpers/normalizeCard");
 
 const router = express.Router();
 
@@ -19,8 +20,8 @@ router.post("/", auth, async (req, res) => {
     if (!userInfo.isBusiness) {
       return res.status(403).send("Only business users can create new card");
     }
-
-    let card = await createCard(req.body);
+    let normalizedCard = await normalizeCard(req.body, userInfo._id);
+    let card = await createCard(normalizedCard);
     res.status(201).send(card);
   } catch (error) {
     res.status(400).send(error.message);
@@ -69,7 +70,6 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedCard = req.body;
 
     let userInfo = req.user;
     const originalCardFromDB = await getCard(id);
@@ -79,7 +79,8 @@ router.put("/:id", auth, async (req, res) => {
         .send("Only the card creator or admin can update card");
     }
 
-    let card = await updateCard(id, updatedCard);
+    let normalizedUpdateCard = await normalizeCard(req.body, userInfo._id);
+    let card = await updateCard(id, normalizedUpdateCard);
     res.status(201).send(card);
   } catch (error) {
     res.status(400).send(error.message);
