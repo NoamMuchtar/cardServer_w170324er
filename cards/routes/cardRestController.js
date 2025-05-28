@@ -8,12 +8,18 @@ const {
   deleteCard,
   likeCard,
 } = require("../models/cardsAccessDataService");
+const auth = require("../../auth/authService");
 
 const router = express.Router();
 
 // Create new card
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
+    const userInfo = req.user;
+    if (!userInfo.isBusiness) {
+      return res.status(403).send("Only business users can create new card");
+    }
+
     let card = await createCard(req.body);
     res.status(201).send(card);
   } catch (error) {
@@ -32,10 +38,16 @@ router.get("/", async (req, res) => {
 });
 
 // Get my card
-router.get("/my-cards", async (req, res) => {
+router.get("/my-cards", auth, async (req, res) => {
   try {
-    const { id } = req.body;
-    let myCards = await getMyCard(id);
+    // const { id } = req.body;
+    const userInfo = req.user;
+
+    if (!userInfo.isBusiness) {
+      return res.status(403).send("Only business users can get my cards");
+    }
+
+    let myCards = await getMyCard(userInfo._id);
     res.status(200).send(myCards);
   } catch (error) {
     res.status(400).send(error.message);
@@ -54,10 +66,19 @@ router.get("/:id", async (req, res) => {
 });
 
 // update card
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
     const updatedCard = req.body;
+
+    let userInfo = req.user;
+    const originalCardFromDB = await getCard(id);
+    if (!userInfo.isAdmin && userInfo._id != originalCardFromDB.user_id) {
+      return res
+        .status(403)
+        .send("Only the card creator or admin can update card");
+    }
+
     let card = await updateCard(id, updatedCard);
     res.status(201).send(card);
   } catch (error) {
@@ -66,9 +87,17 @@ router.put("/:id", async (req, res) => {
 });
 
 // delete card
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
+    let userInfo = req.user;
+
+    const originalCardFromDB = await getCard(id);
+    if (!userInfo.isAdmin && userInfo._id != originalCardFromDB.user_id) {
+      return res
+        .status(403)
+        .send("Only the card creator or admin can delete card");
+    }
     let card = await deleteCard(id);
     res.status(200).send(card);
   } catch (error) {
@@ -77,7 +106,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // like card
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
     const { userId } = req.body;
