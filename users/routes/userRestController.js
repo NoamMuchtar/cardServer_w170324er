@@ -6,6 +6,7 @@ const {
   loginUser,
 } = require("../models/usersAccessDataService");
 const auth = require("../../auth/authService");
+const { handleError, createError } = require("../../utils/handleErrors");
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.post("/", async (req, res) => {
     let user = await registerUser(newUser);
     res.status(201).send(user);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, 400, error.message);
   }
 });
 
@@ -28,14 +29,16 @@ router.get("/:id", auth, async (req, res) => {
     let userInfo = req.user;
     let user = await getUser(id);
     if (!userInfo.isAdmin && userInfo._id != user._id) {
-      return res
-        .status(403)
-        .send(`Only the own user or admin can show is details`);
+      return createError(
+        "Authorization",
+        "Only the own user or admin can show is details",
+        403
+      );
     }
 
     res.status(200).send(user);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -44,13 +47,17 @@ router.get("/", auth, async (req, res) => {
   let userInfo = req.user;
 
   if (!userInfo.isAdmin) {
-    return res.status(403).send("Only admin user can get all users list");
+    return createError(
+      "Authorization",
+      "Only admin user can get all users list",
+      403
+    );
   }
   try {
     let users = await getAllUsers();
     res.status(200).send(users);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -61,7 +68,7 @@ router.post("/login", async (req, res) => {
     const token = await loginUser(email, password);
     res.send(token).status(200);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, 400, error.message);
   }
 });
 

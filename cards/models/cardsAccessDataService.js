@@ -1,3 +1,4 @@
+const { createError } = require("../../utils/handleErrors");
 const Card = require("./mongodb/Card");
 
 const DB = "MONGODB";
@@ -10,7 +11,7 @@ const createCard = async (newCard) => {
       card = await card.save();
       return card;
     } catch (error) {
-      throw new Error("Mongoose: " + error.message);
+      return createError("Mongoose", error.message);
     }
   }
 
@@ -25,7 +26,7 @@ const getAllCards = async () => {
       let cards = await Card.find();
       return cards;
     } catch (error) {
-      throw new Error("Mongoose: " + error.message);
+      return createError("Mongoose", error.message, 500);
     }
   }
 };
@@ -37,7 +38,7 @@ const getCard = async (cardId) => {
       let card = await Card.findById(cardId);
       return card;
     } catch (error) {
-      throw new Error("Mongoose: " + error.message);
+      return createError("Mongoose", error.message);
     }
   }
 };
@@ -48,7 +49,7 @@ const getMyCard = async (id) => {
     let myCards = await Card.find({ user_id: id });
     return myCards;
   } catch (error) {
-    throw new Error("Mongoose: " + error.message);
+    return createError("Mongoose", error.message);
   }
 };
 // update cards
@@ -57,7 +58,7 @@ const updateCard = async (cardId, updatedCard) => {
     let card = await Card.findByIdAndUpdate(cardId, updatedCard, { new: true });
     return card;
   } catch (error) {
-    throw new Error("Mongoose: " + error.message);
+    return createError("Mongoose", error.message);
   }
 };
 
@@ -67,7 +68,7 @@ const deleteCard = async (cardId) => {
     let card = await Card.findByIdAndDelete(cardId);
     return card;
   } catch (error) {
-    throw new Error("Mongoose: " + error.message);
+    return createError("Mongoose", error.message);
   }
 };
 
@@ -76,7 +77,10 @@ const likeCard = async (cardId, userId) => {
   try {
     let card = await Card.findById(cardId);
     if (!card) {
-      throw new Error("A card with this ID cannot be found in the database");
+      return createError(
+        "Mongoose",
+        "A card with this ID cannot be found in the database"
+      );
     }
 
     if (card.likes.includes(userId)) {
@@ -88,7 +92,7 @@ const likeCard = async (cardId, userId) => {
     await card.save();
     return card;
   } catch (error) {
-    throw new Error("Mongoose: " + error.message);
+    return createError("Mongoose", error.message);
   }
 };
 

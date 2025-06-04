@@ -10,6 +10,7 @@ const {
 } = require("../models/cardsAccessDataService");
 const auth = require("../../auth/authService");
 const normalizeCard = require("../helpers/normalizeCard");
+const { handleError, createError } = require("../../utils/handleErrors");
 
 const router = express.Router();
 
@@ -18,13 +19,17 @@ router.post("/", auth, async (req, res) => {
   try {
     const userInfo = req.user;
     if (!userInfo.isBusiness) {
-      return res.status(403).send("Only business users can create new card");
+      return createError(
+        "Authorization",
+        "Only business users can create new card",
+        403
+      );
     }
     let normalizedCard = await normalizeCard(req.body, userInfo._id);
     let card = await createCard(normalizedCard);
     res.status(201).send(card);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -34,7 +39,7 @@ router.get("/", async (req, res) => {
     let allCards = await getAllCards();
     res.status(200).send(allCards);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -45,13 +50,17 @@ router.get("/my-cards", auth, async (req, res) => {
     const userInfo = req.user;
 
     if (!userInfo.isBusiness) {
-      return res.status(403).send("Only business users can get my cards");
+      return createError(
+        "Authorization",
+        "Only business users can get my cards",
+        403
+      );
     }
 
     let myCards = await getMyCard(userInfo._id);
     res.status(200).send(myCards);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -62,7 +71,7 @@ router.get("/:id", async (req, res) => {
     let card = await getCard(id);
     res.status(200).send(card);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, 400, error.message);
   }
 });
 
@@ -74,16 +83,18 @@ router.put("/:id", auth, async (req, res) => {
     let userInfo = req.user;
     const originalCardFromDB = await getCard(id);
     if (!userInfo.isAdmin && userInfo._id != originalCardFromDB.user_id) {
-      return res
-        .status(403)
-        .send("Only the card creator or admin can update card");
+      return createError(
+        "Authorization",
+        "Only the card creator or admin can update card",
+        403
+      );
     }
 
     let normalizedUpdateCard = await normalizeCard(req.body, userInfo._id);
     let card = await updateCard(id, normalizedUpdateCard);
     res.status(201).send(card);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -95,14 +106,17 @@ router.delete("/:id", auth, async (req, res) => {
 
     const originalCardFromDB = await getCard(id);
     if (!userInfo.isAdmin && userInfo._id != originalCardFromDB.user_id) {
-      return res
-        .status(403)
-        .send("Only the card creator or admin can delete card");
+      return createError(
+        "Authorization",
+        "Only the card creator or admin can delete card",
+        403
+      );
     }
+
     let card = await deleteCard(id);
     res.status(200).send(card);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -114,7 +128,7 @@ router.patch("/:id", auth, async (req, res) => {
     let card = await likeCard(id, userId);
     res.status(200).send(card);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, 400, error.message);
   }
 });
 module.exports = router;
