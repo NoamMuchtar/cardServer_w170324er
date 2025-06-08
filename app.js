@@ -1,4 +1,5 @@
 const express = require("express");
+const chalk = require("chalk");
 const connectToDB = require("./DB/dbService");
 const router = require("./router/router");
 
@@ -13,7 +14,9 @@ app.use(express.static("./public"));
 
 app.use((req, res, next) => {
   console.log(
-    `Request URL: ${req.url} | Method: ${req.method} | Time: ${new Date()}`
+    chalk.yellow(
+      `Request URL: ${req.url} | Method: ${req.method} | Time: ${new Date()}`
+    )
   );
   next();
 });
@@ -28,6 +31,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Server is listening to port" + PORT);
+  console.log(chalk.green.bold.bgYellow("app is listening to port " + PORT));
   connectToDB();
 });

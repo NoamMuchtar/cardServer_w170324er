@@ -11,8 +11,11 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mongoose": "^8.15.0"

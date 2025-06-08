@@ -7,6 +7,11 @@ const {
 } = require("../models/usersAccessDataService");
 const auth = require("../../auth/authService");
 const { handleError, createError } = require("../../utils/handleErrors");
+const returnUser = require("../helpers/returnUser");
+const {
+  validateRegistertion,
+  validateLogin,
+} = require("../validation/userValidationService");
 
 const router = express.Router();
 
@@ -14,8 +19,14 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     let newUser = req.body;
+
+    const errorMessage = validateRegistertion(newUser);
+    if (errorMessage != "") {
+      return createError("Validation", errorMessage, 400);
+    }
+
     let user = await registerUser(newUser);
-    res.status(201).send(user);
+    res.status(201).send(returnUser(user));
   } catch (error) {
     return handleError(res, 400, error.message);
   }
@@ -65,6 +76,13 @@ router.get("/", auth, async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
+
+    const errorMessage = validateLogin(req.body);
+    if (errorMessage != "") {
+      console.log(errorMessage);
+      return createError("Validation", errorMessage, 400);
+    }
+
     const token = await loginUser(email, password);
     res.send(token).status(200);
   } catch (error) {
