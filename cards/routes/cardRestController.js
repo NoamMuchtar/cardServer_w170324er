@@ -11,6 +11,7 @@ const {
 const auth = require("../../auth/authService");
 const normalizeCard = require("../helpers/normalizeCard");
 const { handleError, createError } = require("../../utils/handleErrors");
+const cardValidation = require("../validation/cardValidationService");
 
 const router = express.Router();
 
@@ -25,6 +26,13 @@ router.post("/", auth, async (req, res) => {
         403
       );
     }
+
+    const validationErrorMessage = cardValidation(req.body);
+    if (validationErrorMessage != "") {
+      console.log(validationErrorMessage);
+      return createError("Validation", validationErrorMessage, 400);
+    }
+
     let normalizedCard = await normalizeCard(req.body, userInfo._id);
     let card = await createCard(normalizedCard);
     res.status(201).send(card);
@@ -88,6 +96,12 @@ router.put("/:id", auth, async (req, res) => {
         "Only the card creator or admin can update card",
         403
       );
+    }
+
+    const validationErrorMessage = cardValidation(req.body);
+    if (validationErrorMessage != "") {
+      console.log(validationErrorMessage);
+      return createError("Validation", validationErrorMessage, 400);
     }
 
     let normalizedUpdateCard = await normalizeCard(req.body, userInfo._id);
