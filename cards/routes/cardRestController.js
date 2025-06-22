@@ -30,7 +30,7 @@ router.post("/", auth, async (req, res) => {
     const validationErrorMessage = cardValidation(req.body);
     if (validationErrorMessage != "") {
       console.log(validationErrorMessage);
-      return createError("Validation", validationErrorMessage, 400);
+      throw createError("Validation", validationErrorMessage, 400);
     }
 
     let normalizedCard = await normalizeCard(req.body, userInfo._id);

@@ -1,0 +1,18 @@
+[2025/06/22 20:36:02] POST /cards 401  -  1.158 ms
+[2025/06/22 20:40:44] POST /cards 401  -  1.421 ms
+[2025/06/22 20:41:11] POST /cards 401  -  2.799 ms
+[2025/06/22 20:51:58] POST /cards 401  -  1.221 ms
+[2025/06/22 20:52:49] POST /cards 401  -  1.692 ms
+[2025/06/22 20:55:15] POST /cards 401  -  2.193 ms
+[2025/06/22 21:05:21] POST /cards 401  -  1.720 ms
+[2025-06-22 21:17:27] undefined undefined 401 - Authentication Error: Please login
+[2025-06-22 21:21:26] undefined undefined Authentication Error: Please login - 
+[2025-06-22 21:21:26] undefined undefined Internal Server Error - 
+[2025-06-22 21:23:58] undefined undefined Authentication Error: Please login - 
+[2025-06-22 21:23:58] undefined undefined [object Object] - 500
+[2025-06-22 21:24:43] undefined undefined Authentication Error: Please login - 
+[2025-06-22 21:24:43] POST /cards 500 - Internal Server Error
+[2025-06-22 21:25:10] undefined undefined Authentication Error: Please login - 
+[2025-06-22 21:25:10] POST /cards 500 - Internal Server Error
+[2025-06-22 21:26:08] undefined undefined 401 - Authentication Error: Please login
+[2025/06/22 22:36:01] POST /cards 401  -  1.459 ms | Authentication Error: Please login

@@ -12,6 +12,7 @@ const createError = (validator, message, status) => {
 };
 
 const handleError = (res, status, message = "") => {
+  res.locals.errorMessage = message;
   console.log(chalk.redBright(message));
   return res.status(status).send(message);
 };

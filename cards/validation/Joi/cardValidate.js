@@ -1,5 +1,4 @@
 const Joi = require("joi");
-const { models } = require("mongoose");
 
 const cardValidate = (card) => {
   const urlRegex =
