@@ -30,7 +30,7 @@ router.post("/", auth, async (req, res) => {
     const validationErrorMessage = cardValidation(req.body);
     if (validationErrorMessage != "") {
       console.log(validationErrorMessage);
-      throw createError("Validation", validationErrorMessage, 400);
+      return createError("Validation", validationErrorMessage, 400);
     }
 
     let normalizedCard = await normalizeCard(req.body, userInfo._id);
@@ -138,8 +138,8 @@ router.delete("/:id", auth, async (req, res) => {
 router.patch("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
-    const { userId } = req.body;
-    let card = await likeCard(id, userId);
+    const userInfo = req.user;
+    let card = await likeCard(id, userInfo._id);
     res.status(200).send(card);
   } catch (error) {
     return handleError(res, 400, error.message);

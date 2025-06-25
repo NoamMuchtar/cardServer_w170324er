@@ -4,6 +4,9 @@ const {
   getUser,
   getAllUsers,
   loginUser,
+  updateUser,
+  changeBusinessStatus,
+  deleteUser,
 } = require("../models/usersAccessDataService");
 const auth = require("../../auth/authService");
 const { handleError, createError } = require("../../utils/handleErrors");
@@ -57,14 +60,14 @@ router.get("/:id", auth, async (req, res) => {
 router.get("/", auth, async (req, res) => {
   let userInfo = req.user;
 
-  if (!userInfo.isAdmin) {
-    return createError(
-      "Authorization",
-      "Only admin user can get all users list",
-      403
-    );
-  }
   try {
+    if (!userInfo.isAdmin) {
+      throw createError(
+        "Authorization",
+        "Only admin user can get all users list",
+        403
+      );
+    }
     let users = await getAllUsers();
     res.status(200).send(users);
   } catch (error) {
@@ -85,6 +88,75 @@ router.post("/login", async (req, res) => {
 
     const token = await loginUser(email, password);
     res.send(token).status(200);
+  } catch (error) {
+    return handleError(res, 400, error.message);
+  }
+});
+
+// update user
+router.put("/:id", auth, async (req, res) => {
+  let userInfo = req.user;
+  let updatedUser = req.body;
+  const { id } = req.params;
+  try {
+    if (userInfo._id !== id) {
+      throw createError(
+        "Authorization",
+        "Only the own user can edit is details",
+        403
+      );
+    }
+
+    const errorMessage = validateRegistertion(req.body);
+    if (errorMessage != "") {
+      return createError("Validation", errorMessage, 400);
+    }
+    console.log(updatedUser);
+    let user = await updateUser(id, updatedUser);
+    console.log(user);
+    res.status(201).send(returnUser(user));
+  } catch (error) {
+    return handleError(res, 400, error.message);
+  }
+});
+
+// change isBusiness status
+router.patch("/:id", auth, async (req, res) => {
+  const { id } = req.params;
+  let userInfo = req.user;
+  try {
+    if (userInfo._id !== id) {
+      throw createError(
+        "Authorization",
+        "Only the own user can change is status",
+        403
+      );
+    }
+
+    let user = await changeBusinessStatus(id);
+    res.status(201).send(returnUser(user));
+  } catch (error) {
+    return handleError(res, 400, error.message);
+  }
+});
+
+// delete user
+
+router.delete("/:id", auth, async (req, res) => {
+  const { id } = req.params;
+  let userInfo = req.user;
+
+  try {
+    if (!userInfo.isAdmin && userInfo._id !== id) {
+      throw createError(
+        "Authorization",
+        "Only the own user or admin can delete",
+        403
+      );
+    }
+
+    let user = await deleteUser(id);
+    res.status(200).send(returnUser(user));
   } catch (error) {
     return handleError(res, 400, error.message);
   }

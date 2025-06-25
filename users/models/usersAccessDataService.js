@@ -54,4 +54,55 @@ const loginUser = async (email, password) => {
     return createError("Authentication", error.message);
   }
 };
-module.exports = { registerUser, getUser, getAllUsers, loginUser };
+
+// update user
+
+const updateUser = async (id, updatedUser) => {
+  try {
+    const userFromDB = await User.findById(id);
+
+    if (!userFromDB) {
+      return createError("Authentication", "User not exist", 400);
+    }
+    let user = await User.findByIdAndUpdate(id, updatedUser);
+    user = await user.save();
+    return user;
+  } catch (error) {
+    return createError("Mongoos", error.message);
+  }
+};
+
+// update business status
+const changeBusinessStatus = async (id) => {
+  let user = await User.findById(id);
+
+  if (!user) {
+    return createError("Authentication", "User not exist", 400);
+  }
+
+  user.isBusiness = !user.isBusiness;
+  user = await user.save();
+  return user;
+};
+
+// delete user
+
+const deleteUser = async (id) => {
+  let user = await User.findById(id);
+
+  if (!user) {
+    return createError("Authentication", "User not exist", 400);
+  }
+
+  user = await User.findByIdAndDelete(id);
+  return user;
+};
+module.exports = {
+  registerUser,
+  getUser,
+  getAllUsers,
+  loginUser,
+  updateUser,
+  changeBusinessStatus,
+  deleteUser,
+};

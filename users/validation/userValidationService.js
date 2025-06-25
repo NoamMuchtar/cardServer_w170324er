@@ -1,3 +1,4 @@
+const User = require("../models/mongodb/User");
 const loginValidation = require("./Joi/loginValidation");
 const registerValidation = require("./Joi/registerValidation");
 

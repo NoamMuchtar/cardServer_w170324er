@@ -1,0 +1,51 @@
+[2025/06/25 17:51:35] POST /cards 401  -  1.337 ms | Authentication Error: Please login
+[2025/06/25 18:28:54] POST /users 400  -  90.779 ms | Mongoos Error: E11000 duplicate key error collection: cardsServer.users index: email_1 dup key: { email: "noam@webify.co.il" }
+[2025/06/25 18:35:47] GET /users/ 500  -  3.222 ms | Internal Server Error
+[2025/06/25 18:38:33] GET /users/ 500  -  1.798 ms | Internal Server Error
+[2025/06/25 18:38:38] GET /users/ 500  -  1.452 ms | Internal Server Error
+[2025/06/25 18:39:22] GET /users/ 500  -  6.923 ms | Internal Server Error
+[2025/06/25 18:41:31] GET /users/ 403  -  2.532 ms
+[2025/06/25 18:42:09] GET /users/ 403  -  1.298 ms
+[2025/06/25 18:42:22] GET /users/ 500  -  6.058 ms | Internal Server Error
+[2025/06/25 18:44:07] GET /users/ 403  -  2.935 ms | Authorization Error: Only admin user can get all users list
+[2025/06/25 18:52:50] POST /users/login 400  -  9.931 ms | Validation Error: "name" is not allowed,"isBusiness" is not allowed,"phone" is not allowed,"address" is not allowed,"image" is not allowed
+[2025/06/25 18:52:58] POST /users/login 400  -  2.619 ms | Validation Error: "isBusiness" is not allowed,"phone" is not allowed,"address" is not allowed,"image" is not allowed
+[2025/06/25 18:54:38] GET /users/685c149de90295fb11d644e4 403  -  4.620 ms | Authorization Error: Only the own user or admin can show is details
+[2025/06/25 18:54:52] GET /users/685c1b267da2107153987ca8 403  -  4.238 ms | Authorization Error: Only the own user or admin can show is details
+[2025/06/25 19:42:19] GET /users/685c16ece90295fb11d644f1 403  -  3.307 ms | Authorization Error: Only the own user or admin can show is details
+[2025/06/25 19:42:28] PUT /users/685c16ece90295fb11d644f1 404  -  0.687 ms | Path not found
+[2025/06/25 19:42:35] PUT /users/685c16ece90295fb11d644f1 404  -  0.237 ms | Path not found
+[2025/06/25 20:01:13] PUT /users/685c16ece90295fb11d644f1 400  -  7.857 ms | Validation Error: "value" must be of type object
+[2025/06/25 20:01:34] PUT /users/685c16ece90295fb11d644f1 400  -  4.176 ms | Validation Error: "value" must be of type object
+[2025/06/25 20:01:39] PUT /users/685c16ece90295fb11d644f1 400  -  4.207 ms | Validation Error: "value" must be of type object
+[2025/06/25 20:02:38] PUT /users/685c16ece90295fb11d644f1 400  -  2.240 ms | Validation Error: "value" must be of type object
+[2025/06/25 20:03:06] PUT /users/685c16ece90295fb11d644f1 400  -  3.167 ms | Validation Error: "value" must be of type object
+[2025/06/25 20:03:25] PUT /users/685c16ece90295fb11d644f1 400  -  5.224 ms | Cannot read properties of undefined (reading 'first')
+[2025/06/25 20:04:33] PUT /users/685c16ece90295fb11d644f1 400  -  10.963 ms | Validation Error: "value" must be of type object
+[2025/06/25 20:04:43] PUT /users/685c16ece90295fb11d644f1 400  -  4.415 ms | user is not defined
+[2025/06/25 20:05:26] PUT /users/685c16ece90295fb11d644f1 400  -  1.642 ms | user is not defined
+[2025/06/25 20:06:33] PUT /users/685c16ece90295fb11d644f1 400  -  3.242 ms | Cannot read properties of undefined (reading 'first')
+[2025/06/25 20:07:10] PUT /users/685c16ece90295fb11d644f1 400  -  2.663 ms | Cannot access 'user' before initialization
+[2025/06/25 20:08:15] PUT /users/685c16ece90295fb11d644f1 400  -  4.096 ms | Cannot read properties of undefined (reading 'first')
+[2025/06/25 20:08:55] PUT /users/685c16ece90295fb11d644f1 400  -  27.315 ms | Mongoos Error: Assignment to constant variable.
+[2025/06/25 20:10:14] PUT /users/685c16ece90295fb11d644f1 400  -  29.872 ms | Mongoos Error: Assignment to constant variable.
+[2025/06/25 20:13:38] PUT /users/685c16ece90295fb11d644f1 400  -  12.425 ms | Validation Error: "value" must be of type object
+[2025/06/25 20:17:36] PUT /users/685c16ece90295fb11d644f1 400  -  3.600 ms | Validation Error: "value" must be of type object
+[2025/06/25 20:19:29] PUT /users/685c16ece90295fb11d644f1 400  -  9.213 ms | Validation Error: "value" must be of type object
+[2025/06/25 20:19:31] PUT /users/685c16ece90295fb11d644f1 400  -  3.335 ms | Validation Error: "value" must be of type object
+[2025/06/25 20:24:39] PUT /users/685c16ece90295fb11d644f1 400  -  3.315 ms | Authorization Error: Only the own user can edit is details
+[2025/06/25 20:25:16] PUT /users/685c16ece90295fb11d644f1 400  -  3.522 ms | Authorization Error: Only the own user can edit is details
+[2025/06/25 20:25:20] PUT /users/685c16ece90295fb11d644f1 400  -  1.784 ms | Authorization Error: Only the own user can edit is details
+[2025/06/25 20:39:46] PATCH /users/685c16ece90295fb11d644f1 400  -  4.371 ms | Authorization Error: Only the own user can change is status
+[2025/06/25 20:39:54] PATCH /users/685c16ece90295fb11d644f1 400  -  2.184 ms | Authorization Error: Only the own user can change is status
+[2025/06/25 20:48:02] PATCH /users/685c1b267da2107153987ca8 400  -  5.630 ms | Authorization Error: Only the own user can change is status
+[2025/06/25 20:48:10] DELETE /users/685c1b267da2107153987ca8 400  -  1.486 ms | Authorization Error: Only the own user or admin can delete
+[2025/06/25 20:53:15] POST /cards/ 401  -  0.615 ms | Authentication Error: Please login
+[2025/06/25 20:56:48] PUT /cards/68374d330edccbafcb2f931b 400  -  16.696 ms | Mongoose Error: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: cardsServer.cards index: email_1 dup key: { email: "qwe@gmail.com" }
+[2025/06/25 20:59:08] POST /users/login 400  -  88.730 ms | Authentication Error: Invalid email or password
+[2025/06/25 20:59:27] POST /users/login 400  -  82.559 ms | Authentication Error: Invalid email or password
+[2025/06/25 21:00:34] POST /cards/677f783ae0b8e607991a1104 404  -  0.516 ms | Path not found
+[2025/06/25 21:00:41] POST /cards/677f783ae0b8e607991a1104 404  -  0.413 ms | Path not found
+[2025/06/25 21:00:49] PUT /cards/677f783ae0b8e607991a1104 403  -  2.915 ms | Authorization Error: Only the card creator or admin can update card
+[2025/06/25 21:01:13] PUT /cards/685c379876f2a6d878b0983c 400  -  9.001 ms | Mongoose Error: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: cardsServer.cards index: email_1 dup key: { email: "qwe2@gmail.com" }
+[2025/06/25 21:04:47] DELETE /cards/677f783ae0b8e607991a1104 403  -  3.386 ms | Authorization Error: Only the card creator or admin can delete card
