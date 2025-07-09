@@ -25,7 +25,7 @@ app.use((err, req, res, next) => {
   return handleError(res, 500, "Internal Server Error");
 });
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
   console.log(chalk.green.bold.bgYellow("app is listening to port " + PORT));
   connectToDB();
 });
