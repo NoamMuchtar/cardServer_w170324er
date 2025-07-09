@@ -19,6 +19,8 @@ const userSchema = new mongoose.Schema({
   isAdmin: { type: Boolean, default: false },
   isBusiness: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
+  loginAttempts: { type: Number, default: 0 },
+  lockUntil: Date,
 });
 
 const User = mongoose.model("user", userSchema);

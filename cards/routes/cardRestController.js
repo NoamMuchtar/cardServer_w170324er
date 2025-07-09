@@ -12,6 +12,7 @@ const auth = require("../../auth/authService");
 const normalizeCard = require("../helpers/normalizeCard");
 const { handleError, createError } = require("../../utils/handleErrors");
 const cardValidation = require("../validation/cardValidationService");
+const Card = require("../models/mongodb/Card");
 
 const router = express.Router();
 
@@ -102,6 +103,33 @@ router.put("/:id", auth, async (req, res) => {
     if (validationErrorMessage != "") {
       console.log(validationErrorMessage);
       return createError("Validation", validationErrorMessage, 400);
+    }
+
+    if (
+      req.body.bizNumber !== originalCardFromDB.bizNumber &&
+      !userInfo.isAdmin
+    ) {
+      return createError(
+        "Authorization",
+        "Only admin user can change bizNumber"
+      );
+    }
+    if (
+      userInfo.isAdmin &&
+      req.body.bizNumber &&
+      req.body.bizNumber !== originalCardFromDB.bizNumber
+    ) {
+      const cardWithSameBizNumber = await Card.findOne({
+        bizNumber: req.body.bizNumber,
+      });
+
+      if (cardWithSameBizNumber) {
+        return createError(
+          "Validation",
+          "The new bizNumber is already exist by another card",
+          400
+        );
+      }
     }
 
     let normalizedUpdateCard = await normalizeCard(req.body, userInfo._id);

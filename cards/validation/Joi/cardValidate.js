@@ -43,6 +43,7 @@ const cardValidate = (card) => {
         zip: Joi.number(),
       })
       .required(),
+    bizNumber: Joi.number().min(1_000_000).max(9_999_999),
   });
 
   return schema.validate(card, { abortEarly: false });

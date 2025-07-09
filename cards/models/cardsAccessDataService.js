@@ -1,7 +1,8 @@
 const { createError } = require("../../utils/handleErrors");
 const Card = require("./mongodb/Card");
+require("dotenv").config();
 
-const DB = "MONGODB";
+const DB = process.env.DB;
 
 // Create Card
 const createCard = async (newCard) => {

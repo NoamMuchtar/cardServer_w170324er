@@ -44,9 +44,29 @@ const loginUser = async (email, password) => {
       return createError("Authentication", "User not exist");
     }
 
+    // בדיקה האם המשתמש חסום
+    if (userFromDB.lockUntil && userFromDB.lockUntil > Date.now()) {
+      return createError(
+        "Authentication",
+        "Account is locked due to multiple login attemts. Try agian later.",
+        403
+      );
+    }
     if (!comparePassword(password, userFromDB.password)) {
+      const attempts = (userFromDB.loginAttempts || 0) + 1;
+      userFromDB.loginAttempts = attempts;
+
+      if (attempts >= 3) {
+        userFromDB.lockUntil = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      }
+      await userFromDB.save();
       return createError("Authentication", "Invalid email or password");
     }
+
+    // איפוס נסיונות במקרה של התחברות מוצלחת
+    userFromDB.loginAttempts = 0;
+    userFromDB.lockUntil = undefined;
+    await userFromDB.save();
 
     const token = generateAuthToken(userFromDB);
     return token;

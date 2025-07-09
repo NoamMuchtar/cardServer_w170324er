@@ -1,0 +1,27 @@
+[2025/06/29 18:50:00] GET /bloblo 404  -  2.838 ms | Path not found
+[2025/06/29 18:51:15] POST /cards 400  -  13.797 ms | Validation Error: "title" is required
+[2025/06/29 18:52:19] POST /users/login 400  -  5.786 ms | Validation Error: "password" is required,"subtitle" is not allowed,"description" is not allowed,"phone" is not allowed,"web" is not allowed,"image" is not allowed,"address" is not allowed
+[2025/06/29 20:38:01] POST /users/login 400  -  96.631 ms | Authentication Error: Invalid email or password
+[2025/06/29 20:38:21] POST /users/login 400  -  92.372 ms | Authentication Error: Invalid email or password
+[2025/06/29 20:38:44] POST /users/login 400  -  91.694 ms | Authentication Error: Invalid email or password
+[2025/06/29 20:38:58] POST /users/login 400  -  4.237 ms | Authentication Error: Account is locked due to multiple login attemts. Try agian later.
+[2025/06/29 20:40:15] POST /users/login 400  -  93.260 ms | Authentication Error: Invalid email or password
+[2025/06/29 20:40:31] POST /users/login 400  -  89.285 ms | Authentication Error: Invalid email or password
+[2025/06/29 20:41:20] POST /users/ 400  -  3.937 ms | Validation Error: "name" is required
+[2025/06/29 20:41:32] POST /users/login 400  -  91.951 ms | Authentication Error: Invalid email or password
+[2025/06/29 20:41:42] POST /users/login 400  -  95.179 ms | Authentication Error: Invalid email or password
+[2025/06/29 21:00:22] PUT /cards/677a5ba49280339038e9680a 403  -  8.344 ms | Authorization Error: Only the card creator or admin can update card
+[2025/06/29 21:01:04] PUT /cards/677a5ba49280339038e9680a 400  -  13.719 ms | Validation Error: Image URL must be valid URL address,"bizNumber" is not allowed,"likes" is not allowed,"createAt" is not allowed,"user_id" is not allowed
+[2025/06/29 21:01:41] PUT /cards/677a5ba49280339038e9680a 400  -  6.384 ms | Validation Error: "bizNumber" is not allowed,"likes" is not allowed,"createAt" is not allowed,"user_id" is not allowed
+[2025/06/29 21:01:55] PUT /cards/677a5ba49280339038e9680a 400  -  8.976 ms | Validation Error: "bizNumber" is not allowed,"user_id" is not allowed
+[2025/06/29 21:02:10] PUT /cards/677a5ba49280339038e9680a 400  -  5.857 ms | Validation Error: "bizNumber" is not allowed
+[2025/06/29 21:03:58] PUT /cards/677a5ba49280339038e9680a 400  -  15.089 ms | Validation Error: "bizNumber" must be of type object
+[2025/06/29 21:05:14] PUT /cards/677a5ba49280339038e9680a 500  -  15.178 ms | Internal Server Error
+[2025/06/29 21:10:45] PUT /cards/677a5ba49280339038e9680a 400  -  14.685 ms | Authorization Error: Only admin user can change bizNumber
+[2025/06/29 21:12:57] PUT /users/login 400  -  4.088 ms | Authorization Error: Only the own user can edit is details
+[2025/06/29 21:13:47] PUT /cards/677a5ba49280339038e9680a 400  -  11.398 ms | Validation Error: "image._id" is not allowed,"address._id" is not allowed,"_id" is not allowed,"likes" is not allowed,"createAt" is not allowed,"user_id" is not allowed,"__v" is not allowed,"createdAt" is not allowed
+[2025/06/29 21:14:02] PUT /cards/677a5ba49280339038e9680a 400  -  6.810 ms | Validation Error: "_id" is not allowed,"likes" is not allowed,"createAt" is not allowed,"user_id" is not allowed,"__v" is not allowed,"createdAt" is not allowed
+[2025/06/29 21:14:05] PUT /cards/677a5ba49280339038e9680a 400  -  11.446 ms | Validation Error: "likes" is not allowed,"createAt" is not allowed,"user_id" is not allowed,"__v" is not allowed,"createdAt" is not allowed
+[2025/06/29 21:14:49] PUT /cards/677a5ba49280339038e9680a 400  -  4.256 ms | Authorization Error: Only admin user can change bizNumber
+[2025/06/29 21:15:19] PUT /cards/677a5ba49280339038e9680a 400  -  6.477 ms | Validation Error: The new bizNumber is already exist by another card
+[2025/06/29 21:15:50] PUT /cards/677a5ba49280339038e9680a 400  -  4.760 ms | Authorization Error: Only admin user can change bizNumber
